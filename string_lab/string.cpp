@@ -57,6 +57,32 @@ String::~String() {
     --alive_;
 }
 
+// TODO(5) 拷贝赋值运算符
+// 场景：对象已经存在，现在要把另一个对象的内容「搬进来」。
+//       和拷贝构造不同——这里 data_ 已经有旧内存了，必须先处理掉。
+//
+// 三个坑，一个都不能踩：
+//   坑一：自赋值。a = a 的时候，如果先把 data_ 删了，再想从 other 复制，
+//         而 other 就是自己——你读的是一块已经被释放的内存。
+//   坑二：内存泄漏。旧的 data_ 不删，直接覆盖指针，那块内存就永远找不回来了。
+//   坑三：返回值。必须返回 String&（= *this），否则 c = b = a 这样的链式赋值会编译失败。
+//
+// 提示：先想清楚这三步的顺序，再动键盘。
+//       想不明白就先用最朴素的办法写出来，让测试来告诉你哪里不对。
+String& String::operator=(const String& other) {
+    if (this == &other) {
+        return *this;
+
+    }
+    size_ = other.size_;
+
+    delete[] data_;
+    data_ = new char[size_ + 1];
+    strcpy(data_, other.data_);
+
+    return *this;
+}
+
 const char* String::c_str() const {
     return data_;
 }

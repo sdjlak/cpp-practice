@@ -10,6 +10,7 @@ public:
     String();                            // 默认构造：空串
     explicit String(const char* s);      // 从 C 字符串构造（s 可能为 nullptr）
     String(const String& other);         // 拷贝构造：必须是深拷贝
+    String& operator=(const String& other);  // 拷贝赋值：已有对象换内容
     ~String();                           // 析构：释放自己那块内存
 
     const char* c_str() const;
