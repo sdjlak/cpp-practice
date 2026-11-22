@@ -6,7 +6,7 @@
 // 运行：
 //   .\string_lab\assign_test.exe
 
-#include "string.h"
+#include "my_string.h"
 
 #include <cstdio>
 #include <cstring>

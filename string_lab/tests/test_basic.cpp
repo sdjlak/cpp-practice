@@ -8,7 +8,7 @@
 //
 // 全过会打印 "ALL PASSED"，退出码 0。
 
-#include "string.h"
+#include "my_string.h"
 
 #include <cstdio>
 #include <cstring>
