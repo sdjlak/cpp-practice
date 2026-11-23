@@ -94,6 +94,11 @@ String& String::operator=(const String& other) {
 //   3) alive_ 要 +1（你确实新建了一个对象）。
 String::String(String&& other) noexcept {
     // 在这里写你的代码
+    data_= other.data_;
+    size_= other.size_;
+    other.data_ = nullptr;
+    other.size_ = 0;
+    alive_++;
 }
 
 // TODO(7) 移动赋值
@@ -108,6 +113,12 @@ String::String(String&& other) noexcept {
 // 注意：对象数量没变，alive_ 不要动。
 String& String::operator=(String&& other) noexcept {
     // 在这里写你的代码
+    if (this == &other)return *this;
+    delete[] data_;
+    data_ = other.data_;
+    size_ = other.size_;
+    other.data_ = nullptr;
+    other.size_ = 0;
     return *this;
 }
 
