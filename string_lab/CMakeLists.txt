@@ -36,3 +36,8 @@ add_test(NAME basic COMMAND test_basic)
 add_executable(test_assign tests/test_assign.cpp)
 target_link_libraries(test_assign PRIVATE my_string)
 add_test(NAME assign COMMAND test_assign)
+
+# ---- 测试 3：移动语义 ----
+add_executable(test_move tests/test_move.cpp)
+target_link_libraries(test_move PRIVATE my_string)
+add_test(NAME move COMMAND test_move)

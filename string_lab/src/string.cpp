@@ -83,8 +83,38 @@ String& String::operator=(const String& other) {
     return *this;
 }
 
+// TODO(6) 移动构造
+// 场景：other 是一个「马上就要消失的临时对象」（右值，来自 std::move 或函数返回值）。
+//       与其把它的数据复制一份，不如直接把它的指针「偷」过来——零复制，快得多。
+//
+// 要求：
+//   1) 接管 other 的 data_ 和 size_；
+//   2) 把 other 置成「空壳」：other.data_ = nullptr; other.size_ = 0;
+//      —— 不置空的话，other 析构时会把你刚偷来的内存 delete 掉，你手里就成了野指针；
+//   3) alive_ 要 +1（你确实新建了一个对象）。
+String::String(String&& other) noexcept {
+    // 在这里写你的代码
+}
+
+// TODO(7) 移动赋值
+// 场景：一个已经存在的对象，要接管另一个临时对象的内容。
+//
+// 要求（顺序很重要）：
+//   1) 如果 this == &other，直接返回 *this（自我移动）；
+//   2) delete[] 掉自己原来的 data_；
+//   3) 接管 other 的指针和长度；
+//   4) 把 other 置成空壳（同 TODO(6)）；
+//   5) 返回 *this。
+// 注意：对象数量没变，alive_ 不要动。
+String& String::operator=(String&& other) noexcept {
+    // 在这里写你的代码
+    return *this;
+}
+
 const char* String::c_str() const {
-    return data_;
+    // 移动之后对象可能变成「空壳」（data_ 为 nullptr），
+    // 这里要保证返回一个安全的空串，否则调用方 strlen(nullptr) 会直接崩。
+    return data_ ? data_ : "";
 }
 
 std::size_t String::size() const {
